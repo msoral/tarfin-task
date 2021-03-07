@@ -9,10 +9,7 @@
     pip install -r requirements.txt
     
  Before running the app for the first time run the following in order.
- 
-    python model/preprocess.py
-    python model/train.py
-    python model/predict.py 
+
     python init.py
     
  Start the app by executing:
