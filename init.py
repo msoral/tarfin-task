@@ -10,7 +10,7 @@ if __name__ == "__main__":
     app = init_app()
     with app.app_context():
         db.create_all()
-        df = pd.read_csv("data/preprocessed.csv", index_col=0)
+        df = pd.read_csv("data/preprocessed.csv", index_col=0).reset_index().rename(columns={"index": "id"})
         data = df.to_dict('records')
         for item in data:
             models.AppTableService.insert_data(item)

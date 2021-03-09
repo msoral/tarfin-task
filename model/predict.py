@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import joblib
 from config import PRED_CONFIGS
 
@@ -32,7 +33,7 @@ def predict(data=None):
         print("Completed!")
     else:
         print("returning prediction for a single value")
-        return model.predict_proba(data)[1]
+        return model.predict_proba(data)[:, 1]
 
 
 if __name__ == "__main__":

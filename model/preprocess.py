@@ -36,6 +36,9 @@ def preprocess():
                 "mode": dependents_mode
             }
         }
+    else:
+        print("Dropping null values!")
+        df.dropna(inplace=True)
 
     df["EstimatedCreditLine"] = df["DebtRatio"] * df["MonthlyIncome"]
     df["AverageIncomeUntilApp"] = df["MonthlyIncome"].expanding().mean()

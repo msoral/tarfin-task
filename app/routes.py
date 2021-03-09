@@ -1,10 +1,9 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify, request
+import pandas as pd
 import os
 import markdown
-# from .models import AppTableService
-import pandas as pd
+from .models import AppTableService
 from model import predict
-from config import TRAIN_CONFIGS
 bp = Blueprint('bp', __name__)
 
 
@@ -21,15 +20,23 @@ def index():
     return markdown.markdown(content)
 
 
-@bp.route('/prediction/<my_id>', methods=['GET'])
-def get_prediction(my_id):
+@bp.route('/prediction/', methods=['GET'])
+def get_prediction():
     print(f"Called get method of Predict.")
-    # data = AppTableService.query_by_id(id)
-    df = pd.read_csv(TRAIN_CONFIGS["load"]["preprocessed_data"], index_col=0)
-    print(df.shape)
-    data = df.loc[my_id].values
-    print(data)
-    prediction = predict(data=data)
-    return {"id": my_id, "prediction": prediction}, 200
-    # else:
-    #     return {"msg": f"no entry with {my_id} could be found."}, 400
+    data = request.get_json(force=True)
+    my_id = data["id"]
+    query_result = AppTableService.query_by_id(my_id)
+    result = query_result.__dict__
+    result.pop("id")
+    result.pop("_sa_instance_state")
+    result.pop("sd2y")
+    print(result)
+    df = pd.DataFrame(result, index=[0])
+    df["EstimatedCreditLine"] = df["debt_ratio"] * df["m_income"]
+    df["AverageIncomeUntilApp"] = df["m_income"].expanding().mean()
+    print(df.head())
+
+    prediction = predict(data=df.values)
+    output = {"id": my_id, "prediction": float(prediction)}
+    return jsonify(output), 200
+

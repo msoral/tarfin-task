@@ -13,7 +13,7 @@ PREPROCESS_CONFIGS = {
         "preprocessed_data": Path.joinpath(DATA_PATH, "preprocessed.csv"),
         "imputation": Path.joinpath(DATA_PATH, "impute.p")
     },
-    "impute": True
+    "impute": False
 }
 
 TRAIN_CONFIGS = {

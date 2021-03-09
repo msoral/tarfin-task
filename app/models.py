@@ -4,8 +4,7 @@ from . import db
 class AppTable(db.Model):
     __tablename__ = "application"
 
-    uid = db.Column("uid", db.Integer, primary_key=True)
-    id = db.Column("id", db.Integer)
+    id = db.Column("id", db.Integer, primary_key=True)
     sd2y = db.Column("SeriousDlqin2yrs", db.Boolean)
     ruul = db.Column("RevolvingUtilizationOfUnsecuredLines", db.Float)
     age = db.Column("age", db.Integer)
@@ -28,7 +27,7 @@ class AppTable(db.Model):
         self.m_income = kwargs.get("MonthlyIncome")
         self.open_credit = kwargs.get("NumberOfOpenCreditLinesAndLoans")
         self.n_late_90 = kwargs.get("NumberOfTimes90DaysLate")
-        self.n_loan_real_estate =kwargs.get("NumberRealEstateLoansOrLines")
+        self.n_loan_real_estate = kwargs.get("NumberRealEstateLoansOrLines")
         self.past_due_6089 = kwargs.get("NumberOfTime60-89DaysPastDueNotWorse")
         self.n_dependents = kwargs.get("NumberOfDependents")
 
@@ -45,5 +44,5 @@ class AppTableService:
 
     @classmethod
     def query_by_id(cls, my_id):
-        return db.session.query(AppTable).get(my_id)
+        return AppTable.query.get(my_id)
 
