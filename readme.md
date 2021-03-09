@@ -2,8 +2,6 @@
 
 ## Setup:
 
-#### 1. Manually
-
  Clone the repo and install dependencies with:
 
     pip install -r requirements.txt
@@ -14,10 +12,7 @@
     
  Start the app by executing:
 
-    python app.py
-    
- The API listens on port 5000 of local host. To get a prediction send a request to:  
-  `http://localhost:5000/api/v1/predict/{my_id}`
+    python wsgi.py
     
 
 ## API
@@ -27,7 +22,11 @@ The API runs at localhost://5000
 #### Get prediction by ID
 **Definition**
 
-`GET /prediction/<id>`
+`GET /api/v1/prediction`
+
+**Input**
+
+`{"id": "1"}`
 
 **Response**
 
